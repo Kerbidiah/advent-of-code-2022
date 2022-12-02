@@ -6,14 +6,13 @@ use std::path::PathBuf;
 use rayon::prelude::*;
 
 #[derive(Debug)] // I do this for all enums and structs because there is no reason not to
-#[derive(PartialEq, Eq)] // might need this later
+#[derive(PartialEq, Eq, Clone, Copy)] // might need these later
 enum Hand {
 	Rock,
 	Paper,
 	Scissors
 }
 
-type Num = u32; // I can easily change the type we are using for all numbers if I want to
 type Pair = (Hand, Hand);
 
 impl Hand {
@@ -36,7 +35,7 @@ impl Hand {
 	}
 	
 	// 1 for Rock, 2 for Paper, and 3 for Scissors
-	pub fn value(&self) -> Num {
+	pub fn value(&self) -> u32 {
 		match self {
 			Hand::Rock => 1,
 			Hand::Paper => 2,
@@ -46,7 +45,7 @@ impl Hand {
 	
 	// 0 if you lost, 3 if the round was a draw, and 6 if you won
 	// you are the left side (instance method is called on)
-	pub fn outcome(&self, other: &Self) -> Num {
+	pub fn outcome(&self, other: &Self) -> u32 {
 		match (self, other) {
 			(Hand::Rock, Hand::Rock) => 3,
 			(Hand::Rock, Hand::Paper) => 0,
@@ -62,12 +61,12 @@ impl Hand {
 
 	// The score for a single round is the score for the shape you selected
 	// plus the score for the outcome of the round
-	pub fn score(&self, other: &Self) -> Num {
+	pub fn score(&self, other: &Self) -> u32 {
 		self.outcome(other) + self.value()
 	}
 
 	// you are .1, NOT .0
-	pub fn score_pair(p: &Pair) -> Num {
+	pub fn score_pair(p: &Pair) -> u32 {
 		p.1.score(&p.0)
 	}
 
@@ -80,12 +79,74 @@ impl Hand {
 	}
 }
 
-fn solve_part_1(path: PathBuf) -> Num {
+
+#[derive(Debug)]
+enum Outcome {
+	Win,
+	Draw,
+	Lose
+}
+
+impl Outcome {
+	// X means you need to lose, Y means you need to end the round in a draw, and Z means you need to win
+	pub fn from_char(c: char) -> Self {
+		match c.to_ascii_lowercase() {
+			'x' => Self::Lose,
+			'y' => Self::Draw,
+			'z' => Self::Win,
+			_ => panic!()
+		}
+	}
+
+	pub fn new_thingy(s: &str) -> (Hand, Self) {
+		let arr: Vec<char> = s.chars().collect();
+
+		(Hand::from_char(arr[0]), Self::from_char(arr[2]))
+	}
+
+	pub fn load(path: PathBuf) -> Vec<(Hand, Self)> {
+		let contents = fs::read_to_string(path).unwrap();
+		let mut lines: Vec<&str> = contents.split('\n').collect();
+		lines.retain(|l| !l.is_empty());
+
+		lines.par_iter().map(|s| Self::new_thingy(s)).collect()
+	}
+
+	pub fn get_move(&self, hand: Hand) -> Hand {
+		match (self, hand) {
+			(Outcome::Win, Hand::Rock) => Hand::Paper,
+			(Outcome::Win, Hand::Paper) => Hand::Scissors,
+			(Outcome::Win, Hand::Scissors) => Hand::Rock,
+			(Outcome::Draw, Hand::Rock) => Hand::Rock,
+			(Outcome::Draw, Hand::Paper) => Hand::Paper,
+			(Outcome::Draw, Hand::Scissors) => Hand::Scissors,
+			(Outcome::Lose, Hand::Rock) => Hand::Scissors,
+			(Outcome::Lose, Hand::Paper) => Hand::Rock,
+			(Outcome::Lose, Hand::Scissors) => Hand::Paper,
+		}
+	}
+
+	pub fn make_pair(thingy: &(Hand, Self)) -> Pair {
+		(thingy.0, thingy.1.get_move(thingy.0))
+	}
+}
+
+fn solve_part_1(path: PathBuf) -> u32 {
 	let pairs = Hand::load(path);
 
 	pairs
-		.iter() // TOOD: convert back to par_iter
+		.par_iter()
 		.map(|p| Hand::score_pair(p))
+		.sum()
+}
+
+fn solve_part_2(path: PathBuf) -> u32 {
+	let thingy = Outcome::load(path);
+
+	thingy
+		.par_iter()
+		.map(|t| Outcome::make_pair(t))
+		.map(|p| Hand::score_pair(&p))
 		.sum()
 }
 
@@ -108,18 +169,18 @@ mod test {
 		assert_eq!(14375, solve_part_1(path));
 	}
 
-	// #[test]
-	// fn example_part_2() {
-	// 	let path = PathBuf::from("inputs/day_02_exmp");
+	#[test]
+	fn example_part_2() {
+		let path = PathBuf::from("inputs/day_02_exmp");
 
-	// 	assert_eq!(12, solve_part_2(path));
-	// }
+		assert_eq!(12, solve_part_2(path));
+	}
 
-	// #[test]
-	// fn real_part_2() {
-	// 	let path = PathBuf::from("inputs/day_02_real");
+	#[test]
+	fn real_part_2() {
+		let path = PathBuf::from("inputs/day_02_real");
 
-	// 	assert_eq!(15, solve_part_2(path));
-	// }
+		assert_eq!(10274, solve_part_2(path));
+	}
 
 }
