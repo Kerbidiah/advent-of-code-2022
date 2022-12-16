@@ -12,8 +12,8 @@ fn solve_part_1(path: PathBuf) -> u32 {
 mod test {
 	use super::*;
 
-	const EXAMPLE_PATH: String = "inputs/day_02_exmp";
-	const REAL_PATH: String = "inputs/day_02_real";
+	const EXAMPLE_PATH: &str = "inputs/day_02_exmp";
+	const REAL_PATH: &str = "inputs/day_02_real";
 
 	#[test]
 	fn example_part_1() {
