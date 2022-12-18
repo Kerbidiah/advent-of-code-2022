@@ -48,12 +48,30 @@ impl Pair {
 	pub fn is_fully_contained(&self) -> bool {
 		self.is_a_in_b() || self.is_b_in_a()
 	}
+
+	pub fn is_overlaping(&self) -> bool {
+		(
+			(self.a.end() >= self.b.start())
+			&&
+			(self.a.start() <= self.b.end())
+		) || (
+			(self.b.end() >= self.a.start())
+			&&
+			(self.b.start() <= self.a.end())
+		)
+	}
 }
 
 fn solve_part_1(path: PathBuf) -> usize {
 	let pairs = Pair::parse(path);
 
 	pairs.par_iter().filter(|p| p.is_fully_contained()).count()
+}
+
+fn solve_part_2(path: PathBuf) -> usize {
+	let pairs = Pair::parse(path);
+
+	pairs.par_iter().filter(|p| p.is_overlaping()).count()
 }
 
 
@@ -78,17 +96,17 @@ mod test {
 		assert_eq!(595, solve_part_1(path));
 	}
 
-	// #[test]
-	// fn example_part_2() {
-	// 	let path = PathBuf::from(EXAMPLE_PATH);
+	#[test]
+	fn example_part_2() {
+		let path = PathBuf::from(EXAMPLE_PATH);
 
-	// 	assert_eq!(12, solve_part_2(path));
-	// }
+		assert_eq!(4, solve_part_2(path));
+	}
 
-	// #[test]
-	// fn real_part_2() {
-	// 	let path = PathBuf::from(REAL_PATH);
+	#[test]
+	fn real_part_2() {
+		let path = PathBuf::from(REAL_PATH);
 
-	// 	assert_eq!(10274, solve_part_2(path));
-	// }
+		assert_eq!(952, solve_part_2(path));
+	}
 }
