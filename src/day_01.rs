@@ -43,28 +43,28 @@ mod test {
 
 	#[test]
 	fn example_part_1() {
-		let path = PathBuf::from("inputs/day_01_exmp");
+		let path = PathBuf::from("inputs/day_01_exmp.txt");
 
 		assert_eq!(24000, solve_part_1(path));
 	}
 
 	#[test]
 	fn real_part_1() {
-		let path = PathBuf::from("inputs/day_01_real");
+		let path = PathBuf::from("inputs/day_01_real.txt");
 
 		assert_eq!(70374, solve_part_1(path));
 	}
 
 	#[test]
 	fn example_part_2() {
-		let path = PathBuf::from("inputs/day_01_exmp");
+		let path = PathBuf::from("inputs/day_01_exmp.txt");
 
 		assert_eq!(45000, solve_part_2(path));
 	}
 
 	#[test]
 	fn real_part_2() {
-		let path = PathBuf::from("inputs/day_01_real");
+		let path = PathBuf::from("inputs/day_01_real.txt");
 
 		assert_eq!(204610, solve_part_2(path));
 	}

@@ -32,7 +32,7 @@ impl Pair {
 	}
 
 	pub fn parse(path: PathBuf) -> Vec<Self> {
-		let lines = tools::read_lines(path);
+		let lines = tools::read_lines(path, true);
 
 		lines.par_iter().map(Self::new).collect()
 	}

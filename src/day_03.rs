@@ -105,8 +105,8 @@ fn solve_part_2(path: PathBuf) -> u32 {
 mod test {
 	use super::*;
 
-	const EXAMPLE_PATH: &str = "inputs/day_03_exmp";
-	const REAL_PATH: &str = "inputs/day_03_real";
+	const EXAMPLE_PATH: &str = "inputs/day_03_exmp.txt";
+	const REAL_PATH: &str = "inputs/day_03_real.txt";
 
 	fn char_score_test_r() {
 		assert_eq!(18, score_char('r'));
