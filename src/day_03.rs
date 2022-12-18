@@ -93,7 +93,6 @@ fn solve_part_2(path: PathBuf) -> u32 {
 			let union_a: HashSet<_> = group[0].intersection(&group[1]).map(|x| x.to_owned()).collect();
 
 			let mut set = group[2].intersection(&union_a);
-			dbg!(&set);
 			
 			let c = set.next().unwrap().to_owned();
 
@@ -143,6 +142,6 @@ mod test {
 	fn real_part_2() {
 		let path = PathBuf::from(REAL_PATH);
 
-		assert_eq!(10274, solve_part_2(path));
+		assert_eq!(2620, solve_part_2(path));
 	}
 }

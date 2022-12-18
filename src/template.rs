@@ -3,6 +3,8 @@
 use std::fs;
 use std::path::PathBuf;
 
+use crate::tools;
+
 fn solve_part_1(path: PathBuf) -> u32 {
 	todo!()
 }
@@ -12,34 +14,34 @@ fn solve_part_1(path: PathBuf) -> u32 {
 mod test {
 	use super::*;
 
-	const EXAMPLE_PATH: &str = "inputs/day_02_exmp";
-	const REAL_PATH: &str = "inputs/day_02_real";
+	const EXAMPLE_PATH: &str = "inputs/day_02_exmp.txt";
+	const REAL_PATH: &str = "inputs/day_02_real.txt";
 
 	#[test]
 	fn example_part_1() {
 		let path = PathBuf::from(EXAMPLE_PATH);
 
-		assert_eq!(15, solve_part_1(path));
+		assert_eq!(00000000000, solve_part_1(path));
 	}
 
 	#[test]
 	fn real_part_1() {
 		let path = PathBuf::from(REAL_PATH);
 
-		assert_eq!(14375, solve_part_1(path));
+		assert_eq!(00000000000, solve_part_1(path));
 	}
 
 	// #[test]
 	// fn example_part_2() {
 	// 	let path = PathBuf::from(EXAMPLE_PATH);
 
-	// 	assert_eq!(12, solve_part_2(path));
+	// 	assert_eq!(00000000000, solve_part_2(path));
 	// }
 
 	// #[test]
 	// fn real_part_2() {
 	// 	let path = PathBuf::from(REAL_PATH);
 
-	// 	assert_eq!(10274, solve_part_2(path));
+	// 	assert_eq!(00000000000, solve_part_2(path));
 	// }
 }
