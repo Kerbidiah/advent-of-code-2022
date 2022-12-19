@@ -61,7 +61,7 @@ impl Ship {
 		}
 	}
 
-	pub fn execute_command(&mut self, command: &Command) {
+	pub fn move_crates(&mut self, command: &Command) {
 		let mut i = 0;
 		while i < command.qty {
 			let item = self.stacks[command.from].pop().unwrap();
@@ -71,9 +71,23 @@ impl Ship {
 		}
 	}
 
-	pub fn run(&mut self, commands: &[Command]) {
+	pub fn execute(&mut self, commands: &[Command]) {
 		commands.iter().for_each(|c| {
-			self.execute_command(c);
+			self.move_crates(c);
+		});
+	}
+	
+	pub fn move_multiple_crates(&mut self, command: &Command) {
+		let target = self.stacks[command.from].len() - (command.qty as usize);
+
+		let mut load = self.stacks[command.from].split_off(target);
+
+		self.stacks[command.to].append(&mut load);
+	}
+
+	pub fn execute_multi(&mut self, commands: &[Command]) {
+		commands.iter().for_each(|c| {
+			self.move_multiple_crates(c);
 		});
 	}
 

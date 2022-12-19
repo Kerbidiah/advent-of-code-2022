@@ -33,14 +33,14 @@ fn load(path: PathBuf) -> (Ship, Vec<Command>) {
 pub fn solve_part_1(path: PathBuf) -> String {
 	let (mut ship, cmds) = load(path);
 
-	ship.run(&cmds);
+	ship.execute(&cmds);
 	ship.tops()
 }
 
 pub fn solve_part_2(path: PathBuf) -> String {
 	let (mut ship, cmds) = load(path);
 
-	ship.run(&cmds);
+	ship.execute_multi(&cmds);
 	ship.tops()
 }
 
@@ -77,6 +77,6 @@ mod test {
 	fn real_part_2() {
 		let path = PathBuf::from(REAL_PATH);
 
-		assert_eq!("00000000000", solve_part_2(path));
+		assert_eq!("VHJDDCWRD", solve_part_2(path));
 	}
 }
