@@ -1,0 +1,20 @@
+P]     [C]         [M]           
+D]     [P] [B]     [V] [S]       
+Q] [V] [R] [V]     [G] [B]       
+R] [W] [G] [J]     [T] [M]     [V
+V] [Q] [Q] [F] [C] [N] [V]     [W
+B] [Z] [Z] [H] [L] [P] [L] [J] [N
+H] [D] [L] [D] [W] [R] [R] [P] [C
+F] [L] [H] [R] [Z] [J] [J] [D] [D
+000000000011111111112222222222333
+012345678901234567890123456789012
+
+
+P C  M   
+D PB VS  
+QVRV GB  
+RWGJ TM V
+VQQFCNV W
+BZZHLPLJN
+HDLDWRRPC
+FLHRZJJDD
