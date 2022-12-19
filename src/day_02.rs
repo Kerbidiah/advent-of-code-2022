@@ -136,7 +136,7 @@ fn solve_part_1(path: PathBuf) -> u32 {
 
 	pairs
 		.par_iter()
-		.map(|p| Hand::score_pair(p))
+		.map(Hand::score_pair)
 		.sum()
 }
 
@@ -145,7 +145,7 @@ fn solve_part_2(path: PathBuf) -> u32 {
 
 	thingy
 		.par_iter()
-		.map(|t| Outcome::make_pair(t))
+		.map(Outcome::make_pair)
 		.map(|p| Hand::score_pair(&p))
 		.sum()
 }

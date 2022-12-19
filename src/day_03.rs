@@ -8,6 +8,8 @@ use itertools::Itertools;
 
 use rayon::prelude::*;
 
+use crate::tools;
+
 fn str_to_hashset(s: &str) -> HashSet<char> {
 	let mut set = HashSet::with_capacity(s.len());
 
@@ -39,9 +41,7 @@ fn score_char(c: char) -> u8 {
 type HashSetPair = (HashSet<char>, HashSet<char>);
 
 fn load(path: PathBuf) -> Vec<HashSetPair> {
-	let contents = fs::read_to_string(path).unwrap();
-	let mut lines: Vec<&str> = contents.split("\n").collect();
-	lines.retain(|line| !line.is_empty());
+	let lines = tools::read_lines(path, true);
 
 	lines
 		.par_iter()
@@ -71,11 +71,7 @@ fn solve_part_1(path: PathBuf) -> u32 {
 }
 
 fn solve_part_2(path: PathBuf) -> u32 {
-
-	// load lines
-	let contents = fs::read_to_string(path).unwrap();
-	let mut lines: Vec<&str> = contents.split("\n").collect();
-	lines.retain(|line| !line.is_empty());
+	let lines = tools::read_lines(path, true);
 
 	// create groups
 	let groups: Vec<Vec<HashSet<char>>> = lines

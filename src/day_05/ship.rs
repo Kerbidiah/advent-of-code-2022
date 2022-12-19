@@ -9,7 +9,7 @@ pub struct Ship {
 }
 
 impl Ship {
-	fn fill_column(arr: &Vec<String>, i: usize) -> Vec<char> {
+	fn fill_column(arr: &[String], i: usize) -> Vec<char> {
 		let k = i - 1;
 
 		arr.iter()
