@@ -1,5 +1,3 @@
-use rayon::prelude::*;
-
 #[derive(Debug)]
 pub struct Storage {
 	pub contents: Vec<FileObject>,
